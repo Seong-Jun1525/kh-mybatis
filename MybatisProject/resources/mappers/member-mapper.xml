@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="memberMapper">
+<!-- namepsapce : 현재 mapper 파일의 고유한 별칭 -->
+
+ 	<!-- 
+ 		DQL
+ 		<select id="식별자(별칭)"
+ 			resultMap="조회된 결과를 매핑할 resultMap의 id값"
+ 			resultType="조회된 결과를 반환하고자하는 resultType"
+ 			
+ 		>
+ 			실행할 SQL문
+ 		</select>
+ 	
+ 		DML (insert/update/delete) 작성 
+ 		
+ 		<insert|update|delete id="sql문식별자"
+ 			[parameterType="전달받을 데이터타입(전체클래스명|별칭)"] 별칭 : MyBatis config xml 파일에 명시한 별칭
+ 		>
+ 			실행할 SQL문
+ 		</insert|update|delete>
+ 	-->
+ 	
+ 	<insert id="insertMember" parameterType="Member">
+ 		INSERT INTO MEMBER (USER_NO, USER_ID, USER_PWD, USER_NAME, EMAIL, BIRTHDAY, GENDER, PHONE, ADDRESS)
+ 			VALUES(SEQ_UNO.NEXTVAL, #{userId}, #{userPwd}, #{userName}, #{email}, #{birthDay}, #{gender}, #{phone}, #{address})
+ 	</insert>
+ 	<update id="updateMember" parameterType="Member">
+ 		UPDATE MEMBER SET 
+ 			EMAIL = #{ email },
+ 			GENDER = #{ gender },
+ 			BIRTHDAY = #{ birthDay },
+ 			PHONE = #{ phone },
+ 			ADDRESS = #{ address },
+ 			MODIFY_DATE = SYSDATE
+ 		WHERE USER_ID = #{ userId }
+ 	</update>
+ 	
+ 	<!-- 미리 했던 내 코드 -->
+ 	<update id="updateMemberPwd" parameterType="Member">
+ 		UPDATE MEMBER SET
+ 			USER_PWD = #{ userPwd },
+ 			MODIFY_DATE = SYSDATE
+ 		WHERE USER_ID = #{ userId }
+ 	</update>
+ 	
+ 	<!-- 강사님이랑 진행 코드 -->
+ 	<update id="updatePwd" parameterType="Member">
+ 		UPDATE MEMBER SET
+ 			USER_PWD = #{ newPwd },
+ 			MODIFY_DATE = SYSDATE
+ 		WHERE USER_ID = #{ id } AND USER_PWD = #{ currentPwd }
+ 	</update>
+ 	
+ 	<update id="deleteMember" parameterType="Member">
+ 		UPDATE MEMBER SET
+ 			STATUS = 'N',
+ 			MODIFY_DATE = SYSDATE
+		WHERE USER_ID = #{ userId } AND USER_PWD = #{ userPwd }
+		<!-- Map 형태일 경우 Map의 키값으로 작성하기 -->
+ 	</update>
+
+	<!-- 
+		resultMap : mybatis의 핵심 기능 중 하나
+					ResultSet으로 부터 조회된 컬럼값을 하나씩 뽑아서 지정한 vo/dto 객체의 각 필드에 저장
+					코드를 줄여주는 역할
+					
+		<resultMap id="식별자" type="조회된 결과를 담아 변환하고자 하는 객체의 타입(전체클래스명 | 별칭)">
+			<result column="조회된컬럼명 property="객체의 필드명 />
+			<result column="조회된컬럼명 property="객체의 필드명 />
+			<result column="조회된컬럼명 property="객체의 필드명 />
+		</resultMap>
+		
+		=> 컬럼명 : 대소문자 구분, 필드명 : 대소문자 구분 O
+	 -->
+	<resultMap id="memberResultMap" type="Member">
+		<result column="USER_ID" property="userId" />
+		<result column="USER_PWD" property="userPwd" />
+		<result column="USER_NAME" property="userName" />
+		<result column="EMAIL" property="email" />
+		<result column="BIRTHDAY" property="birthDay" />
+		<result column="GENDER" property="gender" />
+		<result column="PHONE" property="phone" />
+		<result column="ADDRESS" property="address" />
+	</resultMap>
+
+ 	<select id="selectMember" resultMap="memberResultMap" parameterType="Member">
+ 		SELECT USER_ID, USER_PWD, USER_NAME, EMAIL, TO_CHAR(TO_DATE(BIRTHDAY, 'RRMMDD'), 'YYYY-MM-DD') AS BIRTHDAY, GENDER, PHONE, ADDRESS
+ 		FROM MEMBER 
+ 		WHERE USER_ID = #{userId} AND USER_PWD = #{ userPwd } AND STATUS = 'Y'
+ 	</select>
+ 	
+	<resultMap id="checkIdResultMap" type="Member">
+		<result column="USER_ID" property="userId" />
+	</resultMap>
+	
+ 	<select id="selectCheckId" resultType="_int" parameterType="Member">
+ 		SELECT COUNT(USER_ID) AS USER_ID
+ 		FROM MEMBER
+ 		WHERE USER_ID = #{userId} AND STATUS = 'Y'
+ 	</select>
+ 	<!-- 
+ 		GROUP BY USER_ID를 첨에 추가 했었는데
+ 		그럼 값이 없을 경우에는 0이 아닌 NULL값을 반환하게 되므로 문제가 발생한다
+ 		
+ 		GROUP BY 절을 제거하여 수정!
+ 		
+ 		 AND STATUS = 'Y' 조건을 추가하여 현재 탈퇴회원이 아닌 경우의 조건을 추가
+ 	 -->
+</mapper>
