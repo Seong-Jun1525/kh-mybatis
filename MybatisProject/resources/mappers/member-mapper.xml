@@ -110,4 +110,13 @@
  		
  		 AND STATUS = 'Y' 조건을 추가하여 현재 탈퇴회원이 아닌 경우의 조건을 추가
  	 -->
+ 	 
+ 	 <resultMap type="Member" id="memberNoResultMap">
+ 	 	<result column="USER_NO" property="userNo" />
+ 	 </resultMap>
+ 	 <select id="selectMemberNo" resultType="_int" parameterType="Member">
+ 	 	SELECT USER_NO
+ 	 	FROM MEMBER
+ 	 	WHERE USER_ID = #{ userId }
+ 	 </select>
 </mapper>

@@ -22,4 +22,6 @@ public interface MemberService {
 	// 중복 아이디 체크
 	int countMemberByUserId(String userId);
 	
+	// 회원 번호
+	int selectMemberNo(String userId);
 }

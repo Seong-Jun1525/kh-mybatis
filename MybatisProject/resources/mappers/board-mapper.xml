@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="boardMapper">
+	
+	<resultMap id="boardListResultMap" type="Board">
+		<result column="BOARD_NO" property="boardNo" />
+		<result column="BOARD_TITLE" property="boardTitle" />
+		<result column="BOARD_WRITER" property="boardWriter" />
+		<result column="CREATE_DATE" property="createDate" />
+		<result column="COUNT" property="count" />
+	</resultMap>
+	<select id="selectBoardList" resultMap="boardListResultMap" parameterType="Board">
+		SELECT BOARD_NO, BOARD_TITLE, BOARD_WRITER, CREATE_DATE, COUNT
+		FROM BOARD
+		ORDER BY CREATE_DATE DESC
+	</select>
+	
+	<resultMap type="Board" id="boardResultMap">
+		<result column="BOARD_NO" property="boardNo" />
+		<result column="BOARD_TITLE" property="boardTitle" />
+		<result column="BOARD_CONTENT" property="boardContent" />
+		<result column="BOARD_WRITER" property="boardWriter" />
+		<result column="CREATE_DATE" property="createDate" />
+		<result column="COUNT" property="count" />
+		<result column="STATUS" property="status" />
+	</resultMap>
+	<select id="selectBoardByNo" resultMap="boardResultMap" parameterType="Board">
+		SELECT *
+		FROM BOARD
+		WHERE BOARD_NO = #{boardNo} AND STATUS = 'Y'
+	</select>
+	
+	<insert id="insertBoard" parameterType="Board">
+		INSERT INTO BOARD VALUES (SEQ_BNO.NEXTVAL, #{boardTitle}, #{boardContent}, #{boardWriter}, DEFAULT, DEFAULT, DEFAULT)
+	</insert>
+	
+	<delete id="deleteBoard" parameterType="Board">
+		DELETE FROM BOARD WHERE BOARD_NO = #{boardNo} AND STATUS = 'Y'
+	</delete>
+</mapper>

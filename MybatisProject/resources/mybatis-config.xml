@@ -25,6 +25,8 @@
 	 -->
 	<typeAliases>
 		<typeAlias type="com.kh.mybatis.member.model.vo.Member" alias="Member" />
+		<typeAlias type="com.kh.mybatis.board.model.vo.Board" alias="Board" />
+		<typeAlias type="com.kh.mybatis.board.reply.model.vo.Reply" alias="Reply" />
 	</typeAliases>
 	<!-- environments : mybatis에서 연동할 DB 정보를 작성하는 영역 -->
 	<environments default="develop">
@@ -65,5 +67,7 @@
 	  -->
 	 <mappers>
 	 	<mapper resource="/mappers/member-mapper.xml" />
+	 	<mapper resource="/mappers/board-mapper.xml" />
+	 	<mapper resource="/mappers/reply-mapper.xml" />
 	 </mappers>
 </configuration>

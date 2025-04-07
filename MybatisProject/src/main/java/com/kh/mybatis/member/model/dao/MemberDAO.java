@@ -39,5 +39,9 @@ public class MemberDAO {
 	public int countMemberByUserId(SqlSession sqlSession, String userId) {
 		return sqlSession.selectOne("memberMapper.selectCheckId", userId);
 	}
+
+	public int selectMemberNo(SqlSession sqlSession, String userId) {
+		return sqlSession.selectOne("memberMapper.selectMemberNo", userId);
+	}
 	
 }

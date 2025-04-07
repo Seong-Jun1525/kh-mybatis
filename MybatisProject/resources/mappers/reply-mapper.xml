@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="replyMapper">
+	<resultMap id="replyListResultMap" type="Reply">
+		<result column="REPLY_CONTENT" property="replyContent" />
+		<result column="REPLY_WRITER" property="replyWriter" />
+		<result column="CREATE_DATE" property="createDate" />
+	</resultMap>
+	<select id="selectReplyList" resultMap="replyListResultMap" parameterType="Reply">
+			SELECT REPLY_CONTENT, REPLY_WRITER, CREATE_DATE
+			FROM REPLY
+			WHERE REF_BNO = #{ boardNo }
+	</select>
+	
+	<insert id="insertReply" parameterType="Reply">
+		INSERT INTO REPLY
+			VALUES(SEQ_RNO.NEXTVAL, #{ replyContent }, #{ boardNo }, #{ replyWriter }, DEFAULT, DEFAULT)
+	</insert>
+	
+	<delete id="deleteReployByBoardNo" parameterType="Reply">
+		DELETE FROM REPLY WHERE REF_BNO = #{boardNo}
+	</delete>
+</mapper>

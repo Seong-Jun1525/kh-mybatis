@@ -6,6 +6,12 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="sweetalert2.min.js"></script>
+<link rel="stylesheet" href="sweetalert2.min.css">
 <style>
 	.login-area a { text-decoration:none; color: black; font-size: 12px; }
 	.login-area a:hover { background: #ffb1ca; color: white; border-radius: 1em; padding: 5px; }
@@ -98,7 +104,9 @@
 	<div class="nav-area" align="center">
 		<div class="menu">HOME</div>
 		<div class="menu">공지사항</div>
-		<div class="menu">게시판</div>
+		<div class="menu">
+			<a href="boardList.bo">게시판</a>
+		</div>
 		<div class="menu">ETC</div>
 	</div>
 </body>

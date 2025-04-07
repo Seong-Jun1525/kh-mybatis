@@ -125,4 +125,16 @@ public class MemberServiceImpl implements MemberService {
 		return result;
 	}
 
+	@Override
+	public int selectMemberNo(String userId) {
+
+		SqlSession sqlSession = Template.getSqlSession();
+		
+		int userNo = mDAO.selectMemberNo(sqlSession, userId);
+		
+		sqlSession.close();
+		
+		return userNo;
+	}
+
 }
