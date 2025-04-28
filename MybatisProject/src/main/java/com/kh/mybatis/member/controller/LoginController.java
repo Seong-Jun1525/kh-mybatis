@@ -31,8 +31,8 @@ public class LoginController extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8"); // 데이터 추출 전에 인코딩 처리
-		String userId = (String) request.getParameter("userId");
-		String userPwd = (String) request.getParameter("userPwd");
+		String userId = request.getParameter("userId");
+		String userPwd = request.getParameter("userPwd");
 		
 		System.out.println("아이디 : " + userId);
 		System.out.println("비밀번호 : " + userPwd);
